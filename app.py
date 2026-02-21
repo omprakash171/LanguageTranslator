@@ -1,16 +1,17 @@
+import os
 from google import genai
-from dotenv import dotenv_values
+from dotenv import load_dotenv
 
-config = dotenv_values(".env")
-api_key = config['GEMINI_API_KEY']
+load_dotenv()
+api_key = os.getenv('GEMINI_API_KEY')
 
 client = genai.Client(api_key = api_key)
 
 
-def language_translator(user_input):
+def language_translator(user_prompt):
     response = client.models.generate_content(
         model = "gemini-2.5-flash", 
-        contents = user_input
+        contents = user_prompt
     )
     return response
 
